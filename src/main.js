@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import Vant from 'vant' // 导入vant
 import 'vant/lib/index.css'
+import './styles/index.css' // 导入通用样式
 
 Vue.use(Vant)
 Vue.config.productionTip = false
