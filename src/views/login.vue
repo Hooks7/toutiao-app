@@ -36,6 +36,10 @@ export default {
       try {
         // data:响应拦截器的data
         const data = await login(this.user)
+        // 存储登陆的状态
+        // 1. vuex
+        this.$store.commit('setUser', data)
+
         // 跳转
         this.$router.push('/')
         this.$toast.success('登录成功')
