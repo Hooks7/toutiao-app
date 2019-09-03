@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { login } from '../api/user'
-
+import { login } from '@/api/user'
+import { mapMutations } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -31,15 +31,19 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUser']),
     // 登录
     async handleLogin () {
       try {
-        // data:响应拦截器的data
-        const data = await login(this.user)
+        // result:响应拦截器的data
+        const result = await login(this.user)
+        console.log(result)
         // 存储登陆的状态
         // 1. vuex
-        this.$store.commit('setUser', data)
-
+        this.$store.commit('setUser', result)
+        // 2.本地存储
+        // --- 以上两件事儿 都是在store中完成----
+        this.setUser(result)
         // 跳转
         this.$router.push('/')
         this.$toast.success('登录成功')
