@@ -34,10 +34,14 @@ export default {
     // 登录
     async handleLogin () {
       try {
-        const res = await login(this.user)
-        console.log(res)
+        // data:响应拦截器的data
+        const data = await login(this.user)
+        // 跳转
+        this.$router.push('/')
+        this.$toast.success('登录成功')
       } catch (err) {
         console.log(err)
+        this.$toast.fail('登录登录')
       }
     }
   }
