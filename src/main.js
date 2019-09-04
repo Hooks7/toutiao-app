@@ -11,7 +11,10 @@ import './styles/index.css' // 导入通用样式
 
 Vue.use(Vant)
 // 配置
-Vue.use(VeeValidate)
+Vue.use(VeeValidate, {
+  // 如果为空的话，文本框输入过程中不验证，需要调用validate方法验证
+  events: ''
+})
 Validator.localize('zh_CN', zhCN)
 Vue.config.productionTip = false
 

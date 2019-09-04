@@ -48,18 +48,33 @@ export default {
     // 登录
     async handleLogin () {
       try {
-        // result:响应拦截器的data
-        const result = await login(this.user)
-        // 存储登陆的状态
-        // 1. vuex
-        this.$store.commit('setUser', result)
-        // 2.本地存储
+        // // result:响应拦截器的data
+        // const result = await login(this.user)
+        // // 存储登陆的状态
+        // // 1. vuex
+        // this.$store.commit('setUser', result)
+        // // 2.本地存储
 
-        // --- 以上两件事儿 都是在store中完成----
-        this.setUser(result)
-        // 跳转
-        this.$router.push('/')
-        this.$toast.success('登录成功')
+        // // --- 以上两件事儿 都是在store中完成----
+        // this.setUser(result)
+        // // 跳转
+        // this.$router.push('/')
+        // this.$toast.success('登录成功')
+
+        // 表单验证
+        this.$validator.validate().then(async valid => {
+          // 验证失败
+          if (!valid) {
+            return
+          }
+          // 验证成功
+          const result = await login(this.user)
+          // 存储登陆的状态
+          this.setUser(result)
+          // 跳转到首页
+          this.$router.push('/')
+          this.$toast.success('登录成功')
+        })
       } catch (err) {
         console.log(err)
         this.$toast.fail('登录登录')
