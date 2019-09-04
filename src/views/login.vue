@@ -68,7 +68,7 @@ export default {
         // this.$toast.success('登录成功')
 
         // 表单验证
-        let valid = await this.$validator.validate()
+        const valid = await this.$validator.validate()
         // 验证失败
         if (!valid) {
           this.loading = false

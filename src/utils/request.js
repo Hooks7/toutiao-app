@@ -1,5 +1,6 @@
 import axios from 'axios'
 import JSONbig from 'json-bigint'
+import store from '@/store'
 
 // 创建个axios实例，设置不同的baseURL
 const request = axios.create({
@@ -19,8 +20,13 @@ request.defaults.transformResponse = [function (data) {
 
 // 请求拦截
 request.interceptors.request.use(function (config) {
-  // Do something before request is sent
+  // console.log(config)
+  if (store.state.user) {
+    // 如果有登录状态请求时，自动携带token
+    config.headers.Authorization = `Bearer${store.state.user.token}`
+  }
   return config
+  // 判断是否有登录状态
 }, function (error) {
   // Do something with request error
   return Promise.reject(error)
