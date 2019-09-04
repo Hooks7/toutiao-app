@@ -25,7 +25,11 @@
     </van-cell-group>
     <!-- 登录按钮 -->
     <div class="login-btn">
-      <van-button @click="handleLogin">登录</van-button>
+      <van-button
+       :loading="loading"
+        type="danger"
+        loading-text="加载中..."
+       @click="handleLogin">登录</van-button>
     </div>
   </div>
 </template>
@@ -40,13 +44,15 @@ export default {
       user: {
         mobile: '13911111111',
         code: '246810'
-      }
+      },
+      loading: false // 加载
     }
   },
   methods: {
     ...mapMutations(['setUser']),
     // 登录
     async handleLogin () {
+      this.loading = true
       try {
         // // result:响应拦截器的data
         // const result = await login(this.user)
@@ -65,6 +71,7 @@ export default {
         let valid = await this.$validator.validate()
         // 验证失败
         if (!valid) {
+          this.loading = false
           return
         }
         // 验证成功
@@ -76,6 +83,7 @@ export default {
         this.$toast.success('登录成功')
       } catch (err) {
         this.$toast.fail('登录失败')
+        this.loading = false
       }
     }
   },
