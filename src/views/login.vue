@@ -4,15 +4,29 @@
     <van-nav-bar title="登录" />
     <!-- 输入框 -->
     <van-cell-group>
-      <van-field left-icon="friends-o" v-model='user.mobile' placeholder="请输入手机号" />
-      <van-field left-icon="warn-o"  v-model='user.code' placeholder="请输入验证码">
-        <van-button slot="button" round type="danger"
-        >发送验证码</van-button>
+      <van-field
+        v-validate="'required|digits:11'"
+        name="mobile"
+        :error-message="errors.first('mobile')"
+        clearable=""
+        left-icon="friends-o"
+        v-model="user.mobile"
+        placeholder="请输入手机号"
+      />
+      <van-field
+        v-validate="'required|digits:6'"
+        name="code"
+        :error-message="errors.first('code')"
+        left-icon="warn-o"
+        v-model="user.code"
+        placeholder="请输入验证码"
+              >
+        <van-button slot="button" round type="danger" size='small'>发送验证码</van-button>
       </van-field>
     </van-cell-group>
     <!-- 登录按钮 -->
     <div class="login-btn">
-      <van-button  @click="handleLogin" >登录</van-button>
+      <van-button @click="handleLogin">登录</van-button>
     </div>
   </div>
 </template>
@@ -37,11 +51,11 @@ export default {
       try {
         // result:响应拦截器的data
         const result = await login(this.user)
-        console.log(result)
         // 存储登陆的状态
         // 1. vuex
         this.$store.commit('setUser', result)
         // 2.本地存储
+
         // --- 以上两件事儿 都是在store中完成----
         this.setUser(result)
         // 跳转
@@ -57,14 +71,11 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.van-button {
-  width: 100%;
-  height: 29px;
-  line-height: 29px;
-}
+
 .login-btn {
   padding: 20px;
   .van-button {
+    width: 100%;
     height: 50px;
   }
 }
