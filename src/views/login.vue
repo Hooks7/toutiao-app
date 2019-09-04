@@ -8,7 +8,6 @@
         v-validate="'required|digits:11'"
         name="mobile"
         :error-message="errors.first('mobile')"
-        clearable=""
         left-icon="friends-o"
         v-model="user.mobile"
         placeholder="请输入手机号"
@@ -20,8 +19,8 @@
         left-icon="warn-o"
         v-model="user.code"
         placeholder="请输入验证码"
-              >
-        <van-button slot="button" round type="danger" size='small'>发送验证码</van-button>
+      >
+        <van-button slot="button" round type="danger" size="small">发送验证码</van-button>
       </van-field>
     </van-cell-group>
     <!-- 登录按钮 -->
@@ -66,12 +65,27 @@ export default {
         this.$toast.fail('登录登录')
       }
     }
+  },
+  created () {
+    // 配置自定义验证信息
+    const dict = {
+      custom: {
+        mobile: {
+          required: '手机号不能为空',
+          digits: '手机号必须是11位的数字'
+        },
+        code: {
+          required: '邮箱不能为空',
+          digits: '验证码必须是6位的数字'
+        }
+      }
+    }
+    this.$validator.localize('custom', dict)
   }
 }
 </script>
 
 <style lang='less' scoped>
-
 .login-btn {
   padding: 20px;
   .van-button {
