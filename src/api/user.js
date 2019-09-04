@@ -13,3 +13,10 @@ export const login = ({
     code
   })
 }
+
+/**
+ * 频道列表
+ */
+export const channel = () => {
+  return request.get('app/v1_0/user/channels')
+}
