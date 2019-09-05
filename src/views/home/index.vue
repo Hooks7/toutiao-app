@@ -54,7 +54,11 @@
 
     <!-- 弹出层组件 -->
     <!-- 如果article的值为null 不显示more-action -->
-    <more-action v-model="showMoreAction" :article="currentArticle" v-if="currentArticle" ></more-action>
+    <more-action
+    @handleSuccess='handleSuccess'
+    v-model="showMoreAction"
+    :article="currentArticle"
+     v-if="currentArticle" ></more-action>
   </div>
 </template>
 
@@ -80,6 +84,7 @@ export default {
       activeIndex: 0,
       // 下拉更新完毕之后显示，成功的提示
       successText: '',
+      // 弹框默认关闭
       showMoreAction: false,
       // 点击x的时候，记录的当前文章对象
       currentArticle: null
@@ -92,6 +97,17 @@ export default {
     }
   },
   methods: {
+    // 不感兴趣删除列表中的数据
+    handleSuccess () {
+      this.showMoreAction = false
+      const articles = this.currentChannel.articles
+      const index = articles.findIndex((item) => {
+        return item.art_id === this.currentArticle.art_id
+      })
+      // 删除指定位置的元素
+      articles.splice(index, 1)
+    },
+
     // 点击x按钮，弹出MoreAction，并且记录对应的文章对象
     handleAction (article) {
       // console.log(article)
