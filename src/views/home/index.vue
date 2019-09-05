@@ -6,13 +6,7 @@
     <van-tabs animated v-model="activeIndex">
       <!-- 遍历，显示频道列表 -->
       <van-tab v-for="item in channels" :title="item.name" :key="item.id">
-        <van-list
-          v-model="currentChannel.loading"
-          :finished="currentChannel.finished"
-          finished-text="没有更多了"
-          @load="onLoad"
-        >
-          <!-- 下拉加载更多组件 -->
+         <!-- 下拉加载更多组件 -->
           <van-pull-refresh
             :success-text="successText"
             v-model="currentChannel.pullLoading"
@@ -20,8 +14,9 @@
           >
             <!-- 文章列表，不同标签不同列表 -->
             <van-list
+              v-model="currentChannel.loading"
               :finished="currentChannel.finished"
-
+              finished-text="没有更多了"
               @load="onLoad"
             >
               <van-cell
@@ -31,13 +26,6 @@
               />
             </van-list>
           </van-pull-refresh>
-
-          <van-cell
-            v-for="item in currentChannel.articles"
-            :key="item.art_id.toString()"
-            :title="item.title"
-          />
-        </van-list>
       </van-tab>
     </van-tabs>
   </div>
@@ -103,7 +91,8 @@ export default {
         this.currentChannel.pullLoading = false
         // 把数据放到数组的最前面（最新数据）
         this.currentChannel.articles.unshift(...data.results)
-        this.successText = `加载了${data.results.length}条`
+
+        this.successText = `加载了${data.results.length}`
       } catch (err) {
         console.log(err)
       }
