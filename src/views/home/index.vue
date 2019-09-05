@@ -5,12 +5,7 @@
     <!-- 频道列表 -->
     <van-tabs>
       <van-tab v-for="item in list" :title="item.name" :key="item.id">
-
-        <van-list v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-        >
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
           <van-cell v-for="item in list" :key="item" :title="item" />
         </van-list>
       </van-tab>
@@ -51,7 +46,6 @@ export default {
         }
       }, 500)
     }
-
   },
   created () {
     this.getList()
@@ -62,9 +56,25 @@ export default {
 <style lang="less" scoped>
 // 在scoped中书写的样式，动态生成的标签或者子组件中不可用
 // 深度作用选择器   /deep/
-.van-tabs /deep/ .van-tabs__content {
-  // margin-top: 46px;
-  margin-bottom: 50px;
+.van-tabs {
+
+  /deep/ .van-tabs__wrap {
+    // position: fixed;
+    top: 46px;
+    left: 0px;
+    z-index: 100;
+  }
+  /deep/ .van-tabs__content {
+    margin-bottom: 50px;
+    margin-top: 46px;
+
 }
+}
+ .van-nav-bar{
+    position: fixed;
+  top: 0;
+  width: 100%;
+    z-index: 100
+  }
 
 </style>
