@@ -6,11 +6,11 @@ import Vant from 'vant' // 导入vant
 import VeeValidate, { Validator } from 'vee-validate' // 导入表单验证
 // 导验证中文包
 import zhCN from 'vee-validate/dist/locale/zh_CN'
-import {fmtDate} from '@/utils/dayjs' //引入时间过滤器
+import { fmtDate } from '@/utils/dayjs' // 引入时间过滤器
 import 'vant/lib/index.css'
 import './styles/index.css' // 导入通用样式
 
-Vue.filter('fmtDate',fmtDate)
+Vue.filter('fmtDate', fmtDate)
 
 Vue.use(Vant)
 // 配置

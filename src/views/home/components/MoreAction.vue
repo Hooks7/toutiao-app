@@ -4,10 +4,9 @@
 
 <script>
 export default {
- name: 'MoreAction'
+  name: 'MoreAction'
 }
 </script>
 
 <style>
-
 </style>
