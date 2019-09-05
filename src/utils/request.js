@@ -23,7 +23,7 @@ request.interceptors.request.use(function (config) {
   // console.log(config)
   if (store.state.user) {
     // 如果有登录状态请求时，自动携带token
-    config.headers.Authorization = `Bearer${store.state.user.token}`
+    config.headers.Authorization = `Bearer ${store.state.user.token}`
   }
   return config
   // 判断是否有登录状态

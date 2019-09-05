@@ -4,7 +4,7 @@
     <van-nav-bar title="头条" />
     <!-- 频道列表 -->
     <van-tabs>
-      <van-tab v-for="item in list" :title="item.name" :key="item.id">
+      <van-tab v-for="item in channels" :title="item.name" :key="item.id">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
           <van-cell v-for="item in list" :key="item" :title="item" />
         </van-list>
@@ -14,22 +14,29 @@
 </template>
 
 <script>
-import { channel } from '@/api/user'
+import { getDefaultOrUserChannels } from '@/api/channel'
 export default {
   name: 'Home',
   data () {
     return {
-      list: [], // 频道列表
+      // 频道列表
+      channels: [],
+      list: [],
       loading: false,
       finished: false
     }
   },
 
   methods: {
+
     // 频道列表
-    async getList () {
-      let result = await channel()
-      this.list = result.channels
+    async loadChannels () {
+      try {
+        let result = await getDefaultOrUserChannels()
+        this.channels = result.channels
+      } catch (err) {
+        console.log(err)
+      }
     },
 
     onLoad () {
@@ -48,7 +55,7 @@ export default {
     }
   },
   created () {
-    this.getList()
+    this.loadChannels()
   }
 }
 </script>
