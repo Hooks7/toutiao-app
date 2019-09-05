@@ -11,7 +11,7 @@
         :finished="currentChannel.finished"
         finished-text="没有更多了"
         @load="onLoad">
-          <van-cell v-for="item in currentChannel.articles" :key="item.art_id" :title="item.title" />
+          <van-cell v-for="item in currentChannel.articles" :key="item.art_id.toString()" :title="item.title" />
         </van-list>
       </van-tab>
     </van-tabs>
@@ -28,10 +28,7 @@ export default {
       // 频道列表
       channels: [],
       // 频道索引
-      activeIndex: 0,
-      list: [],
-      loading: false,
-      finished: false
+      activeIndex: 0
     }
   },
   computed: {
