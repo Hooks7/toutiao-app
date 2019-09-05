@@ -6,26 +6,47 @@
     <van-tabs animated v-model="activeIndex">
       <!-- 遍历，显示频道列表 -->
       <van-tab v-for="item in channels" :title="item.name" :key="item.id">
-         <!-- 下拉加载更多组件 -->
-          <van-pull-refresh
-            :success-text="successText"
-            v-model="currentChannel.pullLoading"
-            @refresh="onRefresh"
+        <!-- 下拉加载更多组件 -->
+        <van-pull-refresh
+          :success-text="successText"
+          v-model="currentChannel.pullLoading"
+          @refresh="onRefresh"
+        >
+          <!-- 文章列表，不同标签不同列表 -->
+          <van-list
+            v-model="currentChannel.loading"
+            :finished="currentChannel.finished"
+            finished-text="没有更多了"
+            @load="onLoad"
           >
-            <!-- 文章列表，不同标签不同列表 -->
-            <van-list
-              v-model="currentChannel.loading"
-              :finished="currentChannel.finished"
-              finished-text="没有更多了"
-              @load="onLoad"
+            <van-cell
+              v-for="item in currentChannel.articles"
+              :key="item.art_id.toString()"
+              :title="item.title"
             >
-              <van-cell
-                v-for="item in currentChannel.articles"
-                :key="item.art_id.toString()"
-                :title="item.title"
-              />
-            </van-list>
-          </van-pull-refresh>
+              <div slot="label">
+                <van-grid :border="false" :column-num="3">
+                  <van-grid-item v-for="(img,index) in item.cover.images" :key="img+index">
+                    <van-image height="80" :src="img" />
+                    <!-- 图片的加载提示 -->
+                    <template v-slot:loading>
+                      <van-loading type="spinner" size="20" />
+                    </template>
+                    <!-- 自定义加载失败提示 -->
+                    <template v-slot:error>加载失败</template>
+                  </van-grid-item>
+                </van-grid>
+                <p>
+                  <span>{{item.aut_name}}</span> &nbsp;
+                  <span>{{item.comm_count}}评论</span>&nbsp;
+                  <span>{{item.pubdate}}</span>
+
+                  <van-icon name="cross" style="float:right" />
+                </p>
+              </div>
+            </van-cell>
+          </van-list>
+        </van-pull-refresh>
       </van-tab>
     </van-tabs>
   </div>
@@ -92,7 +113,7 @@ export default {
         // 把数据放到数组的最前面（最新数据）
         this.currentChannel.articles.unshift(...data.results)
 
-        this.successText = `加载了${data.results.length}`
+        this.successText = `加载了${data.results.length}条`
       } catch (err) {
         console.log(err)
       }
@@ -103,7 +124,7 @@ export default {
       try {
         let result = await getDefaultOrUserChannels()
         // 给所有频道设置，时间戳和文章数组
-        console.log(result)
+        // console.log(result)
         result.channels.forEach(item => {
           item.timestamp = null
           item.articles = []
