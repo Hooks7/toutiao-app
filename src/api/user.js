@@ -1,4 +1,4 @@
-import request from '../utils/request'
+import request from '@/utils/request'
 
 /**
  *  登录方法
@@ -18,5 +18,5 @@ export const login = ({
  * 频道列表
  */
 export const channel = () => {
-  return request.get('app/v1_0/user/channels')
+  return request.get('/app/v1_0/user/channels')
 }
