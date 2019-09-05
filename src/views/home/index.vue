@@ -3,7 +3,8 @@
     <!-- 导航头 -->
     <van-nav-bar title="头条" />
     <!-- 频道列表 -->
-    <van-tabs>
+    <van-tabs animated v-model="activeIndex">
+      <!-- 遍历，显示频道列表 -->
       <van-tab v-for="item in channels" :title="item.name" :key="item.id">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
           <van-cell v-for="item in list" :key="item" :title="item" />
@@ -21,6 +22,9 @@ export default {
     return {
       // 频道列表
       channels: [],
+      // tab是组件中默认显示的tab项的索引
+      // 通过该index，可以找到当前的频道对象
+      activeIndex: 0,
       list: [],
       loading: false,
       finished: false
