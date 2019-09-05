@@ -42,7 +42,7 @@
                   <span>{{item.comm_count}}评论</span>&nbsp;
                   <span>{{item.pubdate|fmtDate}}</span>
 
-                  <van-icon name="cross" style="float:right" />
+                  <van-icon name="cross" style="float:right"  @click="showMoreAction=true"/>
                 </p>
               </div>
             </van-cell>
@@ -52,7 +52,7 @@
     </van-tabs>
 
     <!-- 弹出层组件 -->
-    <more-action></more-action>
+    <more-action v-model="showMoreAction"></more-action>
   </div>
 </template>
 
@@ -77,7 +77,9 @@ export default {
       // 频道索引
       activeIndex: 0,
       // 下拉更新完毕之后显示，成功的提示
-      successText: ''
+      successText: '',
+      showMoreAction: false
+
     }
   },
   computed: {

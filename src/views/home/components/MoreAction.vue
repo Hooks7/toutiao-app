@@ -1,5 +1,9 @@
 <template>
-  <van-dialog v-model="show" :show-cancel-button="false" close-on-click-overlay>
+  <van-dialog
+  :value = "value"
+  @input="$emit('input',$event)"
+  :showConfirmButton="false"
+  close-on-click-overlay>
     <van-cell-group v-show="!showReports">
       <van-cell title="不感兴趣" icon="location-o" />
       <van-cell title="反馈垃圾内容" icon="location-o" is-link @click="showReports=true" />
@@ -19,9 +23,15 @@
 <script>
 export default {
   name: 'MoreAction',
+  props: {
+    value: {
+      type: Boolean,
+      required: true
+    }
+  },
   data () {
     return {
-      show: true,
+      // show: true,
       showReports: false
     }
   }
