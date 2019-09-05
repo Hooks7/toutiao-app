@@ -27,6 +27,11 @@ export default {
     value: {
       type: Boolean,
       required: true
+    },
+    // 接收父组件传递的文章对象
+    article: {
+      type: Object,
+      required: true
     }
   },
   data () {
@@ -34,6 +39,8 @@ export default {
       // show: true,
       showReports: false
     }
+  },
+  created () {
   }
 }
 </script>

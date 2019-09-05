@@ -41,8 +41,9 @@
                   <span>{{item.aut_name}}</span> &nbsp;
                   <span>{{item.comm_count}}评论</span>&nbsp;
                   <span>{{item.pubdate|fmtDate}}</span>
-
-                  <van-icon name="cross" style="float:right"  @click="showMoreAction=true"/>
+            <!-- 点击x按钮，记录当前的文章对象 -->
+                  <van-icon name="cross" style="float:right"
+                 @click="handleAction(item)"/>
                 </p>
               </div>
             </van-cell>
@@ -52,7 +53,8 @@
     </van-tabs>
 
     <!-- 弹出层组件 -->
-    <more-action v-model="showMoreAction"></more-action>
+    <!-- 如果article的值为null 不显示more-action -->
+    <more-action v-model="showMoreAction" :article="currentArticle" v-if="currentArticle" ></more-action>
   </div>
 </template>
 
@@ -78,8 +80,9 @@ export default {
       activeIndex: 0,
       // 下拉更新完毕之后显示，成功的提示
       successText: '',
-      showMoreAction: false
-
+      showMoreAction: false,
+      // 点击x的时候，记录的当前文章对象
+      currentArticle: null
     }
   },
   computed: {
@@ -89,6 +92,13 @@ export default {
     }
   },
   methods: {
+    // 点击x按钮，弹出MoreAction，并且记录对应的文章对象
+    handleAction (article) {
+      // console.log(article)
+      this.showMoreAction = true
+      this.currentArticle = article
+    },
+
     async onLoad () {
       // 异步更新数据
       const data = await getArticles({
