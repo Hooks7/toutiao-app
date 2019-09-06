@@ -64,7 +64,7 @@ export default {
         this.$emit('handleSuccess')
         this.$toast.success('操作成功')
       } catch (err) {
-        this.$toast.success('操作失败')
+        this.$toast.fail('操作失败')
       }
     }
   }

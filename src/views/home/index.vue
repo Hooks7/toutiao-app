@@ -59,6 +59,9 @@
     v-model="showMoreAction"
     :article="currentArticle"
      v-if="currentArticle" ></more-action>
+
+     <!-- 弹出频道管理 -->
+    <channel-edit></channel-edit>
   </div>
 </template>
 
@@ -68,13 +71,15 @@ import { getArticles } from '@/api/article'
 import Vue from 'vue'
 import { Lazyload } from 'vant'
 import MoreAction from './components/MoreAction'
+import ChannelEdit from './components/ChannelEdit'
 
 // options 为可选参数，无则不传
 Vue.use(Lazyload)
 export default {
   name: 'Home',
   components: {
-    MoreAction
+    MoreAction,
+    ChannelEdit
   },
   data () {
     return {
