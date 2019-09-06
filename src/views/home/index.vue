@@ -4,6 +4,7 @@
     <van-nav-bar title="头条" />
     <!-- 频道列表 -->
     <van-tabs animated v-model="activeIndex">
+      <van-icon slot="nav-right" name="ascending" class="nav-btn"  @click="showChannelEdit='true' "/>
       <!-- 遍历，显示频道列表 -->
       <van-tab v-for="item in channels" :title="item.name" :key="item.id">
         <!-- 下拉加载更多组件 -->
@@ -27,13 +28,13 @@
               <div slot="label">
                 <van-grid :border="false" :column-num="3">
                   <van-grid-item v-for="(img,index) in item.cover.images" :key="img+index">
-                    <van-image height="80" :src="img" >
-                    <!-- 图片的加载提示 -->
-                    <template v-slot:loading>
-                      <van-loading type="spinner" size="20" />
-                    </template>
-                    <!-- 自定义加载失败提示 -->
-                    <template v-slot:error>加载失败</template>
+                    <van-image height="80" :src="img">
+                      <!-- 图片的加载提示 -->
+                      <template v-slot:loading>
+                        <van-loading type="spinner" size="20" />
+                      </template>
+                      <!-- 自定义加载失败提示 -->
+                      <template v-slot:error>加载失败</template>
                     </van-image>
                   </van-grid-item>
                 </van-grid>
@@ -41,9 +42,8 @@
                   <span>{{item.aut_name}}</span> &nbsp;
                   <span>{{item.comm_count}}评论</span>&nbsp;
                   <span>{{item.pubdate|fmtDate}}</span>
-            <!-- 点击x按钮，记录当前的文章对象 -->
-                  <van-icon name="cross" style="float:right"
-                 @click="handleAction(item)"/>
+                  <!-- 点击x按钮，记录当前的文章对象 -->
+                  <van-icon name="cross" style="float:right" @click="handleAction(item)" />
                 </p>
               </div>
             </van-cell>
@@ -55,13 +55,16 @@
     <!-- 弹出层组件 -->
     <!-- 如果article的值为null 不显示more-action -->
     <more-action
-    @handleSuccess='handleSuccess'
-    v-model="showMoreAction"
-    :article="currentArticle"
-     v-if="currentArticle" ></more-action>
+      @handleSuccess="handleSuccess"
+      v-model="showMoreAction"
+      :article="currentArticle"
+      v-if="currentArticle"
+    ></more-action>
 
-     <!-- 弹出频道管理 -->
-    <channel-edit></channel-edit>
+    <!-- 弹出频道管理 -->
+    <channel-edit
+    v-model="showChannelEdit"
+    ></channel-edit>
   </div>
 </template>
 
@@ -92,7 +95,9 @@ export default {
       // 弹框默认关闭
       showMoreAction: false,
       // 点击x的时候，记录的当前文章对象
-      currentArticle: null
+      currentArticle: null,
+      // 控制频道管理的弹出层显示隐藏
+      showChannelEdit: false
     }
   },
   computed: {
@@ -106,7 +111,7 @@ export default {
     handleSuccess () {
       this.showMoreAction = false
       const articles = this.currentChannel.articles
-      const index = articles.findIndex((item) => {
+      const index = articles.findIndex(item => {
         return item.art_id === this.currentArticle.art_id
       })
       // 删除指定位置的元素
@@ -198,10 +203,18 @@ export default {
 // 深度作用选择器   /deep/
 .van-tabs {
   /deep/ .van-tabs__wrap {
-    // position: fixed;
+    position: fixed;
+    left:0;
+    right: 0;
     top: 46px;
-    left: 0px;
     z-index: 100;
+    .nav-btn {
+      position: fixed;
+      right: 3px;
+      line-height: 44px;
+      font-size: 20px;
+      opacity: 0.8;
+    }
   }
   /deep/ .van-tabs__content {
     margin-bottom: 50px;
