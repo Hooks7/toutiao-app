@@ -7,7 +7,7 @@
     <van-cell-group v-show="!showReports">
       <van-cell title="不感兴趣" icon="location-o" @click="handle('dislike')" />
       <van-cell title="反馈垃圾内容" icon="location-o" is-link @click="showReports=true" />
-      <van-cell title="拉黑作者" icon="location-o" />
+      <van-cell title="拉黑作者" icon="location-o" @click="handle('blacklist')"/>
     </van-cell-group>
 
     <!-- 举报文章 -->
@@ -22,6 +22,7 @@
 
 <script>
 import { dislikeArticle } from '@/api/article'
+import { blacklists } from '@/api/user'
 export default {
   name: 'MoreAction',
   props: {
@@ -52,6 +53,10 @@ export default {
           // 不感兴趣
           this.dislike()
           break
+        case 'blacklist':
+          // 拉黑作者
+          this.blacklistUser()
+          break
       }
     },
 
@@ -61,6 +66,17 @@ export default {
         await dislikeArticle(this.article.art_id)
         // 隐藏，移除掉数据
         // 告知父组件，操作成功
+        this.$emit('handleSuccess')
+        this.$toast.success('操作成功')
+      } catch (err) {
+        this.$toast.fail('操作失败')
+      }
+    },
+    // 拉黑作者
+    async blacklistUser () {
+      try {
+        await blacklists(this.article.aut_id)
+        // 通知父组件拉黑成功
         this.$emit('handleSuccess')
         this.$toast.success('操作成功')
       } catch (err) {

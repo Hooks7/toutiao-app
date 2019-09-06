@@ -6,7 +6,7 @@
     <van-tabs animated v-model="activeIndex">
       <van-icon slot="nav-right" name="ascending" class="nav-btn"  @click="showChannelEdit='true' "/>
       <!-- 遍历，显示频道列表 -->
-      <van-tab v-for="item in channels" :title="item.name" :key="item.id">
+      <van-tab v-for="item in channels" :title="item.name" :key="item.id" type='card' >
         <!-- 下拉加载更多组件 -->
         <van-pull-refresh
           :success-text="successText"
