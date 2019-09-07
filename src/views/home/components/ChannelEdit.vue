@@ -14,32 +14,31 @@
     </van-cell>
     <van-grid>
       <van-grid-item
-       v-for="(item,index) in channels"
-      :key="item.id"
-      @click="handleMyChannelItem(index,item.id)"
+        v-for="(item,index) in channels"
+        :key="item.id"
+        @click="handleMyChannelItem(index,item.id)"
       >
-        <div slot ='text' class="van-grid-item__text" :class="{active :active===index}" >
-          {{item.name}}
-        </div>
+        <div slot="text" class="van-grid-item__text" :class="{active :active===index}">{{item.name}}</div>
         <!-- 关闭按钮 -->
-        <van-icon slot="icon" class="close-icon" name="close"
-        v-show="isEdit  && index !== 0"
-         />
+        <van-icon slot="icon" class="close-icon" name="close" v-show="isEdit  && index !== 0" />
       </van-grid-item>
     </van-grid>
 
     <!-- 推荐频道 -->
     <van-cell title="推荐频道" label="点击添加频道" />
     <van-grid>
-      <van-grid-item v-for="item in recommendChannels"
-      :key="item.id"
-      :text="item.name" />
+      <van-grid-item
+        v-for="item in recommendChannels"
+        :key="item.id"
+        :text="item.name"
+        @click="handleChannelItem(item)"
+      />
     </van-grid>
   </van-popup>
 </template>
 
 <script>
-import { getAllChannels, delAllChannels } from '@/api/channel'
+import { getAllChannels, delAllChannels, addChannel } from '@/api/channel'
 import { mapState } from 'vuex'
 import { setItem } from '@/utils/localStorage'
 export default {
@@ -89,6 +88,22 @@ export default {
   },
 
   methods: {
+    // 点击推荐频道
+    async handleChannelItem (channel) {
+      if (!this.isEdit) {
+        return
+      }
+      this.channels.push(channel)
+      // 登录
+      if (this.user) {
+        console.log(channel)
+        await addChannel({ id: channel.id, seq: this.channels.length })
+        return
+      }
+      // 没登录，把频道列表记录到本地
+      setItem('channels', this.channels)
+    },
+
     // 点击我的频道
     async handleMyChannelItem (index, id) {
       // 1.非编辑模式
@@ -103,7 +118,6 @@ export default {
       this.channels.splice(index, 1)
       // 登录
       if (this.user) {
-        console.log(this.channels)
         await delAllChannels(id)
         return
       }
@@ -136,6 +150,6 @@ export default {
 }
 
 .active {
-  color: red
+  color: red;
 }
 </style>

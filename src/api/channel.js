@@ -15,7 +15,17 @@ export const getAllChannels = () => {
   return request.get('/app/v1_0/channels')
 }
 
-// 批量删除用户频道列表
+// 删除用户频道列表
 export const delAllChannels = (id) => {
   return request.delete(`/app/v1_0/user/channels/${id}`)
+}
+
+// 添加用户频道
+export const addChannel = ({
+  id, // 当前频道id
+  seq // 顺序序号
+}) => {
+  return request.put(`/app/v1_0/user/channels/${id}`, {
+    seq
+  })
 }
