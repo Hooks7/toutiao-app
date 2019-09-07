@@ -13,7 +13,11 @@
       <van-button round type="danger" size="mini" v-show="isEdit" @click="isEdit=false">完成</van-button>
     </van-cell>
     <van-grid>
-      <van-grid-item v-for="item in channels" :key="item.id" :text="item.name">
+      <van-grid-item v-for="(item,index) in channels" :key="item.id">
+        <div slot ='text' class="van-grid-item__text" :class="{active :active===index}" >
+          {{item.name}}
+        </div>
+        <!-- 关闭按钮 -->
         <van-icon slot="icon" class="close-icon" name="close"
         v-show="isEdit"
          />
@@ -39,8 +43,14 @@ export default {
       type: Boolean,
       required: true
     },
+    // 接收父组件传过来的我的频道
     channels: {
       type: Array,
+      required: true
+    },
+    // 接受频道索引
+    active: {
+      type: Number,
       required: true
     }
   },
@@ -94,5 +104,9 @@ export default {
   position: absolute;
   right: 0;
   top: 0;
+}
+
+.active {
+  color: red
 }
 </style>

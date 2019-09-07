@@ -63,7 +63,8 @@
 
     <!-- 弹出频道管理 -->
     <channel-edit
-    :channels = 'channels'
+    :active ='activeIndex'
+    :channels ="channels"
     v-model="showChannelEdit"
     ></channel-edit>
   </div>
