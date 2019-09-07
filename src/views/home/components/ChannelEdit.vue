@@ -5,7 +5,11 @@
     position="bottom"
     :style="{ height: '85%' }"
   >
-    <van-cell icon="cross" />
+    <van-cell>
+      <div>
+        <van-icon name="cross" slot="icon" />
+      </div>
+    </van-cell>
 
     <!-- 我的频道 -->
     <van-cell title="我的频道" label="点击进入频道">
@@ -13,14 +17,21 @@
       <van-button round type="danger" size="mini" v-show="isEdit" @click="isEdit=false">完成</van-button>
     </van-cell>
     <van-grid>
-      <van-grid-item
-        v-for="(item,index) in channels"
-        :key="item.id"
-        @click="handleMyChannelItem(index,item.id)"
-      >
-        <div slot="text" class="van-grid-item__text" :class="{active :active===index}">{{item.name}}</div>
+      <van-grid-item v-for="(item,index) in channels" :key="item.id">
+        <div
+          slot="text"
+          class="van-grid-item__text"
+          :class="{active :active===index}"
+          @click="jumpMyChannelItem(index)"
+        >{{item.name}}</div>
         <!-- 关闭按钮 -->
-        <van-icon slot="icon" class="close-icon" name="close" v-show="isEdit  && index !== 0" />
+        <van-icon
+          slot="icon"
+          class="close-icon"
+          name="close"
+          v-show="isEdit && index !== 0"
+          @click="handleMyChannelItem(index,item.id)"
+        />
       </van-grid-item>
     </van-grid>
 
@@ -80,6 +91,7 @@ export default {
 
   data () {
     return {
+      hah: true,
       // 是否为编辑模式
       isEdit: false,
       // 存储所有的频道
@@ -93,24 +105,38 @@ export default {
       if (!this.isEdit) {
         return
       }
+      this.$set(channel, 'timestamp', null)
+      this.$set(channel, 'articles', [])
+      this.$set(channel, 'loading', false)
+      this.$set(channel, 'finished', false)
+      this.$set(channel, 'pullLoading', false)
+      //  把channel添加到我的频道
       this.channels.push(channel)
       // 登录
       if (this.user) {
-        console.log(channel)
-        await addChannel({ id: channel.id, seq: this.channels.length })
+        try {
+          await addChannel({ id: channel.id, seq: this.channels.length })
+        } catch (err) {
+          this.$toast.fail('操作失败')
+        }
         return
       }
       // 没登录，把频道列表记录到本地
       setItem('channels', this.channels)
     },
 
-    // 点击我的频道
-    async handleMyChannelItem (index, id) {
-      // 1.非编辑模式
+    // 点击我的频道非编辑模式
+    jumpMyChannelItem (index) {
       if (!this.isEdit) {
         // 告诉父组件，选中的频道的索引
         // 关闭对话框
         this.$emit('activeChange', index)
+      }
+    },
+
+    // 点击我的频道
+    async handleMyChannelItem (index, id) {
+      if (!this.isEdit) {
         return
       }
       // 2.编辑模式
@@ -118,7 +144,11 @@ export default {
       this.channels.splice(index, 1)
       // 登录
       if (this.user) {
-        await delAllChannels(id)
+        try {
+          await delAllChannels(id)
+        } catch (err) {
+          this.$toast.success('操作失败')
+        }
         return
       }
       // 没登录，把频道列表记录到本地
