@@ -16,14 +16,14 @@
       <van-grid-item
        v-for="(item,index) in channels"
       :key="item.id"
-      @click="handleMyChannelItem(index)"
+      @click="handleMyChannelItem(index,item.id)"
       >
         <div slot ='text' class="van-grid-item__text" :class="{active :active===index}" >
           {{item.name}}
         </div>
         <!-- 关闭按钮 -->
         <van-icon slot="icon" class="close-icon" name="close"
-        v-show="isEdit"
+        v-show="isEdit  && index !== 0"
          />
       </van-grid-item>
     </van-grid>
@@ -39,7 +39,9 @@
 </template>
 
 <script>
-import { getAllChannels } from '@/api/channel'
+import { getAllChannels, delAllChannels } from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/localStorage'
 export default {
   name: 'ChannelEdit',
   props: {
@@ -60,6 +62,7 @@ export default {
   },
 
   computed: {
+    ...mapState(['user']),
     // 推荐频道
     recommendChannels () {
       // 1.获取我的频道中所有id组成的数组
@@ -87,13 +90,25 @@ export default {
 
   methods: {
     // 点击我的频道
-    handleMyChannelItem (index) {
+    async handleMyChannelItem (index, id) {
       // 1.非编辑模式
       if (!this.isEdit) {
         // 告诉父组件，选中的频道的索引
         // 关闭对话框
         this.$emit('activeChange', index)
+        return
       }
+      // 2.编辑模式
+      // 把点击的频道，从我的频道删除
+      this.channels.splice(index, 1)
+      // 登录
+      if (this.user) {
+        console.log(this.channels)
+        await delAllChannels(id)
+        return
+      }
+      // 没登录，把频道列表记录到本地
+      setItem('channels', this.channels)
     },
 
     // 加载所有的频道列表
