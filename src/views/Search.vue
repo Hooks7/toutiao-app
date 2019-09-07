@@ -8,42 +8,60 @@
       @search="onSearch"
       @cancel="onCancel"
       background="pink"
+      @input="handleInput"
+      clearable
     />
-    <!-- 温馨提示 -->
-    <van-cell-grouo>
-      <van-cell title="单元格" icon="search" />
-      <van-cell title="单元格" icon="search" />
+    <!-- 搜索提示 -->
+    <van-cell-grouo v-show="value">
+      <van-cell v-for="item in suggestionList" :key="item" :title="item" icon="search" />
     </van-cell-grouo>
 
     <!-- 历史记录 -->
-    <van-cell-grouo>
+    <van-cell-grouo v-show="!value">
       <van-cell title="历史记录">
-          <!-- 自定义右侧内容 -->
-            <div>
-                <span>全部删除</span>&nbsp;
-                <span>完成</span>&nbsp;
-                <van-icon  name="delete" size="18px"/>
-            </div>
+        <!-- 自定义右侧内容 -->
+        <div>
+          <span>全部删除</span>&nbsp;
+          <span>完成</span>&nbsp;
+          <van-icon name="delete" size="18px" />
+        </div>
       </van-cell>
       <van-cell title="单元格">
         <!-- 自定义右侧内容 -->
         <van-icon name="close" size="18px" />
       </van-cell>
-
     </van-cell-grouo>
   </div>
 </template>
 
 <script>
+import { getSuggestion } from '@/api/search'
 export default {
   data () {
     return {
-      value: ''
+      value: '',
+      // 存储搜索建议
+      suggestionList: []
     }
   },
   methods: {
     onSearch () {},
-    onCancel () {}
+    onCancel () {},
+    // 在文本框输入的过程中获取搜索提示
+    async handleInput () {
+      // 判断是否为空
+
+      if (this.value.length === 0) {
+        return
+      }
+      try {
+        const res = await getSuggestion(this.value)
+        this.suggestionList = res.options
+      } catch (err) {
+        console.log(err)
+      }
+      console.log(this.suggestionList)
+    }
   }
 }
 </script>
