@@ -1,5 +1,5 @@
 .van-nav-bar {
-  background: linear-gradient(left, red 0%, orange 10%, yellow 90%, violet 100%);
+  background: linear-gradient(left, red 0%, orange 10%, #00a2ff 90%, violet 100%);
 }
 .van-nav-bar .van-ellipsis {
   color: beige;

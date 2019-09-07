@@ -7,7 +7,7 @@
   >
     <van-cell>
       <div>
-        <van-icon name="cross" slot="icon" />
+        <van-icon name="cross" slot="icon" @click="$emit('input',false)"/>
       </div>
     </van-cell>
 
@@ -17,21 +17,15 @@
       <van-button round type="danger" size="mini" v-show="isEdit" @click="isEdit=false">完成</van-button>
     </van-cell>
     <van-grid>
-      <van-grid-item v-for="(item,index) in channels" :key="item.id">
+      <van-grid-item v-for="(item,index) in channels" :key="item.id"  @click="handleMyChannelItem(index,item.id)">
         <div
           slot="text"
           class="van-grid-item__text"
           :class="{active :active===index}"
-          @click="jumpMyChannelItem(index)"
+
         >{{item.name}}</div>
         <!-- 关闭按钮 -->
-        <van-icon
-          slot="icon"
-          class="close-icon"
-          name="close"
-          v-show="isEdit && index !== 0"
-          @click="handleMyChannelItem(index,item.id)"
-        />
+        <van-icon slot="icon" class="close-icon" name="close" v-show="isEdit && index !== 0" />
       </van-grid-item>
     </van-grid>
 
@@ -125,29 +119,25 @@ export default {
       setItem('channels', this.channels)
     },
 
-    // 点击我的频道非编辑模式
-    jumpMyChannelItem (index) {
+    // 点击我的频道
+    async handleMyChannelItem (index, id) {
+      // 非编辑模式
       if (!this.isEdit) {
         // 告诉父组件，选中的频道的索引
         // 关闭对话框
         this.$emit('activeChange', index)
-      }
-    },
-
-    // 点击我的频道
-    async handleMyChannelItem (index, id) {
-      if (!this.isEdit) {
         return
       }
       // 2.编辑模式
       // 把点击的频道，从我的频道删除
-      this.channels.splice(index, 1)
+      // eslint-disable-next-line no-unused-expressions
+      index !== 0 ? this.channels.splice(index, 1) : null
       // 登录
       if (this.user) {
         try {
           await delAllChannels(id)
         } catch (err) {
-          this.$toast.success('操作失败')
+          // this.$toast.success('操作失败')
         }
         return
       }

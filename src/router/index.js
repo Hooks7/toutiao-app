@@ -7,6 +7,12 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      // 搜索页
+      path: '/search',
+      name: 'search',
+      component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
+    },
     { // 登录页
       path: '/login',
       name: 'login',

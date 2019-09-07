@@ -4,7 +4,7 @@ import store from '@/store'
 
 // 创建个axios实例，设置不同的baseURL
 const request = axios.create({
-  timeout: 5000,
+  timeout: 10000,
   baseURL: 'http://ttapi.research.itcast.cn'
 })
 
