@@ -13,7 +13,11 @@
       <van-button round type="danger" size="mini" v-show="isEdit" @click="isEdit=false">完成</van-button>
     </van-cell>
     <van-grid>
-      <van-grid-item v-for="(item,index) in channels" :key="item.id">
+      <van-grid-item
+       v-for="(item,index) in channels"
+      :key="item.id"
+      @click="handleMyChannelItem(index)"
+      >
         <div slot ='text' class="van-grid-item__text" :class="{active :active===index}" >
           {{item.name}}
         </div>
@@ -48,7 +52,7 @@ export default {
       type: Array,
       required: true
     },
-    // 接受频道索引
+    // 接受父组件频道索引
     active: {
       type: Number,
       required: true
@@ -82,6 +86,16 @@ export default {
   },
 
   methods: {
+    // 点击我的频道
+    handleMyChannelItem (index) {
+      // 1.非编辑模式
+      if (!this.isEdit) {
+        // 告诉父组件，选中的频道的索引
+        // 关闭对话框
+        this.$emit('activeChange', index)
+      }
+    },
+
     // 加载所有的频道列表
     async loadAllChannels () {
       try {

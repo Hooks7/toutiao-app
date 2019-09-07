@@ -63,6 +63,7 @@
 
     <!-- 弹出频道管理 -->
     <channel-edit
+    @activeChange = "handleChange"
     :active ='activeIndex'
     :channels ="channels"
     v-model="showChannelEdit"
@@ -110,6 +111,11 @@ export default {
     }
   },
   methods: {
+    handleChange (index) {
+      this.activeIndex = index
+      this.showChannelEdit = false
+    },
+
     // 不感兴趣删除列表中的数据
     handleSuccess () {
       this.showMoreAction = false
