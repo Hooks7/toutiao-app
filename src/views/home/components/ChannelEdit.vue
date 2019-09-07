@@ -10,11 +10,10 @@
     <!-- 我的频道 -->
     <van-cell title="我的频道" label="点击进入频道">
       <van-button round type="danger" size="mini" v-show="!isEdit" @click="isEdit=true">编辑</van-button>
-
       <van-button round type="danger" size="mini" v-show="isEdit" @click="isEdit=false">完成</van-button>
     </van-cell>
     <van-grid>
-      <van-grid-item v-for="item in 8" :key="item" text="文字">
+      <van-grid-item v-for="item in channels" :key="item.id" :text="item.name">
         <van-icon slot="icon" class="close-icon" name="close"
         v-show="isEdit"
          />
@@ -35,6 +34,10 @@ export default {
   props: {
     value: {
       type: Boolean,
+      required: true
+    },
+    channels: {
+      type: Array,
       required: true
     }
   },
