@@ -1,6 +1,12 @@
 .van-nav-bar {
-  background: linear-gradient(left, red 0%, orange 10%, #00a2ff 90%, violet 100%);
+  background: pink;
 }
 .van-nav-bar .van-ellipsis {
   color: beige;
+}
+.van-nav-bar .van-icon{
+  color: #fff
+}
+.van-nav-bar__text{
+  color: #fff
 }
