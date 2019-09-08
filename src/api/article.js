@@ -34,7 +34,7 @@ export const reportArticle = ({ target, type }) => {
   })
 }
 
-// export const reportArticle = (target, type) => {
-//   console.log(target, type)
-//   return request.post('/app/v1_0/article/reports', target)
-// }
+// 获取文章详情,id文章的id
+export const getArticle = (id) => {
+  return request.get(`/app/v1_0/articles/${id}`)
+}
