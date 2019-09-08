@@ -1,7 +1,9 @@
 <template>
   <div>
     <!-- 导航头 -->
-    <van-nav-bar title="头条" />
+    <van-nav-bar title="头条">
+      <van-icon name="search" slot="right"  @click="$router.push('/search')"/>
+    </van-nav-bar>
     <!-- 频道列表 -->
     <van-tabs animated v-model="activeIndex">
       <van-icon slot="nav-right" name="ascending" class="nav-btn"  @click="showChannelEdit=true "/>
@@ -24,6 +26,7 @@
               v-for="item in currentChannel.articles"
               :key="item.art_id.toString()"
               :title="item.title"
+              @click="$router.push({name:'detail',params:{id:item.art_id.toString()}})"
             >
               <div slot="label">
                 <van-grid :border="false" :column-num="3">
@@ -43,7 +46,7 @@
                   <span>{{item.comm_count}}评论</span>&nbsp;
                   <span>{{item.pubdate|fmtDate}}</span>
                   <!-- 点击x按钮，记录当前的文章对象 -->
-                  <van-icon name="cross" style="float:right" @click="handleAction(item)" />
+                  <van-icon name="cross" style="float:right" @click.stop="handleAction(item)" />
                 </p>
               </div>
             </van-cell>

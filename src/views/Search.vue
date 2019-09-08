@@ -111,7 +111,9 @@ export default {
       storageTools.setItem('history', this.histories)
     },
 
-    onCancel () {},
+    onCancel () {
+      this.$router.push('/')
+    },
 
     // 删除
     async handleDelete (index) {
