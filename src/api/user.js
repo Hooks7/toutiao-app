@@ -32,3 +32,23 @@ export const focusUser = (id) => {
 export const unFollowUser = (id) => {
   return request.delete(`/app/v1_0/user/followings/${id}`)
 }
+
+// 点赞
+export const ThumbUpArticles = (id) => {
+  return request.post('/app/v1_0/article/likings', {
+    target: id
+  })
+}
+
+// 取消点赞
+export const CancelThumbUp = (id) => {
+  return request.delete(`/app/v1_0/article/likings/${id}`)
+}
+
+// 取消不喜欢
+
+export const dislikeArticles = (id) => {
+  return request.post('/app/v1_0/article/dislikes', {
+    target: id
+  })
+}

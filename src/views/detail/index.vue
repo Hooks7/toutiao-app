@@ -11,7 +11,7 @@
         <div class="article-content" v-html="article.content"></div>
       </div>
       <!-- 点赞和取消 -->
-      <more-Action></more-Action>
+      <more-Action :article='article'></more-Action>
     </div>
   </div>
 </template>
