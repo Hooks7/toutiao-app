@@ -20,7 +20,33 @@
     v-for="item in list"
     :key ='item.art_id.toString()'
     :title="item.title"
-    />
+    >
+        <div slot="label">
+          <!-- grid 显示封面
+            item.cover.type   0 没有图片   1 1个图片 3 3个图片
+            -->
+          <van-grid v-if="item.cover.type" :border="false" :column-num="3">
+            <van-grid-item
+              v-for="(img, index) in item.cover.images"
+              :key="img + index"
+            >
+              <van-image lazy-load height="80" :src="img" >
+                <!-- 图片的加载提示 -->
+                <template v-slot:loading>
+                  <van-loading type="spinner" size="20" />
+                </template>
+                <!-- 自定义加载失败提示 -->
+                <template v-slot:error>加载失败</template>
+              </van-image>
+            </van-grid-item>
+          </van-grid>
+          <p>
+            <span>{{ item.aut_name }}</span>&nbsp;
+            <span>{{ item.comm_count }}评论</span>&nbsp;
+            <span>{{ item.pubdate | fmtDate }}</span>&nbsp;
+          </p>
+        </div>
+      </van-cell>
 
     </van-list>
   </div>
