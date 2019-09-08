@@ -13,6 +13,13 @@ export default new Router({
       name: 'search',
       component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
     },
+    {
+      // 搜索页
+      path: '/search-result/:q',
+      name: 'search-result',
+      props: true,
+      component: () => import(/* webpackChunkName: "search" */ '../views/SearchResult.vue')
+    },
     { // 登录页
       path: '/login',
       name: 'login',
