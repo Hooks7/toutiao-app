@@ -12,24 +12,26 @@
       clearable
     />
     <!-- 搜索提示 -->
-    <van-cell-grouo v-show="value">
+    <van-cell-group v-show="value">
       <van-cell
         @click="onSearch(item)"
         v-for="item in suggestionList"
         :key="item"
         :title="item"
         icon="search"
-></van-cell>
-    </van-cell-grouo>
+      > <div slot="title" v-html="highlight(item)"></div>
+      </van-cell>
+
+    </van-cell-group>
 
     <!-- 历史记录 -->
-    <van-cell-grouo v-show="!value">
+    <van-cell-group v-show="!value">
       <van-cell title="历史记录">
         <!-- 自定义右侧内容 -->
         <div v-show="isEdit" style="display:inline-block">
           <span @click="handleDeleteAll">全部删除</span>&nbsp;
-          <span @click="isEdit=false">完成</span>&nbsp;
-
+          <span @click="isEdit=false">完成</span>
+&nbsp;
         </div>
         <van-icon @click="isEdit=true" v-show="!isEdit" name="delete" size="18px" />
       </van-cell>
@@ -37,12 +39,17 @@
         <!-- 自定义右侧内容 -->
         <van-icon name="close" size="18px" @click="handleDelete(index)" />
       </van-cell>
-    </van-cell-grouo>
+    </van-cell-group>
   </div>
 </template>
 
 <script>
-import { getSuggestion, searchSuggestion, searchResult, delHistory } from '@/api/search'
+import {
+  getSuggestion,
+  searchSuggestion,
+  searchResult,
+  delHistory
+} from '@/api/search'
 import { mapState } from 'vuex'
 import * as storageTools from '@/utils/localStorage'
 
@@ -56,7 +63,6 @@ export default {
       // 历史记录
       histories: [],
       isEdit: false
-
     }
   },
 
@@ -73,6 +79,12 @@ export default {
   },
 
   methods: {
+    // 搜索高亮
+    highlight (item) {
+      const reg = new RegExp(this.value, 'gi')
+      return item.replace(reg, `<span style='color:red'>${this.value}</span>`)
+    },
+
     // 确认搜索
     async onSearch (item) {
       // 判断histories中是否已经存在item
@@ -107,14 +119,22 @@ export default {
     },
     // 全部删除
     handleDeleteAll () {
-      this.$dialog.confirm({
-        title: '您确认全部删除吗'
-      }).then(() => {
-        this.histories.splice(0)
-        delHistory()
-      }).catch(() => {
-        // on cancel
-      })
+      this.$dialog
+        .confirm({
+          title: '您确认全部删除吗'
+        })
+        .then(() => {
+          this.histories.splice(0)
+          if (this.user) {
+            delHistory()
+
+            return
+          }
+          storageTools.setItem('history', this.histories)
+        })
+        .catch(() => {
+          // on cancel
+        })
     },
 
     // 在文本框输入的过程中获取搜索提示
