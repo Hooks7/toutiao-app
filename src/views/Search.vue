@@ -19,31 +19,33 @@
         :key="item"
         :title="item"
         icon="search"
-/>
+></van-cell>
     </van-cell-grouo>
 
     <!-- 历史记录 -->
     <van-cell-grouo v-show="!value">
       <van-cell title="历史记录">
         <!-- 自定义右侧内容 -->
-        <div>
-          <span>全部删除</span>&nbsp;
-          <span>完成</span>&nbsp;
-          <van-icon name="delete" size="18px" />
+        <div v-show="isEdit" style="display:inline-block">
+          <span @click="handleDeleteAll">全部删除</span>&nbsp;
+          <span @click="isEdit=false">完成</span>&nbsp;
+
         </div>
+        <van-icon @click="isEdit=true" v-show="!isEdit" name="delete" size="18px" />
       </van-cell>
-      <van-cell v-for="item in histories" :key="item" :title="item">
+      <van-cell v-for="(item,index) in histories" :key="item" :title="item">
         <!-- 自定义右侧内容 -->
-        <van-icon name="close" size="18px" />
+        <van-icon name="close" size="18px" @click="handleDelete(index)" />
       </van-cell>
     </van-cell-grouo>
   </div>
 </template>
 
 <script>
-import { getSuggestion, searchSuggestion, searchResult } from '@/api/search'
+import { getSuggestion, searchSuggestion, searchResult, delHistory } from '@/api/search'
 import { mapState } from 'vuex'
 import * as storageTools from '@/utils/localStorage'
+
 export default {
   name: 'Search',
   data () {
@@ -52,7 +54,9 @@ export default {
       // 存储搜索建议
       suggestionList: [],
       // 历史记录
-      histories: []
+      histories: [],
+      isEdit: false
+
     }
   },
 
@@ -87,7 +91,31 @@ export default {
       //   没有登录
       storageTools.setItem('history', this.histories)
     },
+
     onCancel () {},
+
+    // 删除
+    async handleDelete (index) {
+      // 登录
+      this.histories.splice(index, 1)
+      if (this.user) {
+        await delHistory()
+        return
+      }
+      // 没登录
+      storageTools.setItem('history', this.histories)
+    },
+    // 全部删除
+    handleDeleteAll () {
+      this.$dialog.confirm({
+        title: '您确认全部删除吗'
+      }).then(() => {
+        this.histories.splice(0)
+        delHistory()
+      }).catch(() => {
+        // on cancel
+      })
+    },
 
     // 在文本框输入的过程中获取搜索提示
     async handleInput () {
