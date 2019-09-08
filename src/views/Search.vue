@@ -52,6 +52,7 @@ import {
 } from '@/api/search'
 import { mapState } from 'vuex'
 import * as storageTools from '@/utils/localStorage'
+import _ from 'lodash'
 
 export default {
   name: 'Search',
@@ -144,9 +145,7 @@ export default {
     },
 
     // 在文本框输入的过程中获取搜索提示
-    async handleInput () {
-      // 判断是否为空
-
+    handleInput: _.debounce(async function () {
       if (this.value.length === 0) {
         return
       }
@@ -156,7 +155,8 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    }
+    }, 300)
+    // 判断是否为空
   },
   computed: {
     ...mapState(['user'])
