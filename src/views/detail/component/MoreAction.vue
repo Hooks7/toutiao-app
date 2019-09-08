@@ -21,7 +21,9 @@ export default {
     // 点赞功能 和取消点赞
     async like () {
       //   判断是否登录
-
+      if (!this.$checkLogin()) {
+        return
+      }
       try {
         // 用户对文章的态度, -1: 无态度，0-不喜欢，1-点赞
         if (this.article.attitude === 1) {

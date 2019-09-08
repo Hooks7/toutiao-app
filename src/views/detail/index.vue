@@ -25,7 +25,7 @@ export default {
   props: ['id'],
   data () {
     return {
-      article: {}
+      article: null
     }
   },
   components: {

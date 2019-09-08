@@ -30,6 +30,9 @@ export default {
   methods: {
     // 点击按钮关注 或者取消关注
     async   attention () {
+      if (!this.$checkLogin()) {
+        return
+      }
       this.loading = true
       // 判断是否登录
       try {
