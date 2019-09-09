@@ -13,7 +13,12 @@ export default {
           message: '是否要跳转到登录界面'
         }).then(() => {
           // 跳转登录界面
-          this.$router.push('/login')
+          this.$router.push({
+            path: '/login',
+            query: {
+              redirect: this.$route.fullPath
+            } })
+          console.log(router)
         }).catch(() => {
 
         })
