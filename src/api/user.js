@@ -47,6 +47,11 @@ export const CancelThumbUp = (id) => {
 
 // 取消不喜欢
 
+export const likeArticles = (id) => {
+  return request.delete(`/app/v1_0/article/dislikes/${id}`)
+}
+
+// 对文章不喜欢
 export const dislikeArticles = (id) => {
   return request.post('/app/v1_0/article/dislikes', {
     target: id

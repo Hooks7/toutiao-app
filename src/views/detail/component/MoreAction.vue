@@ -3,12 +3,13 @@
     <van-button
     :icon="article.attitude ===1 ?'star':'star-o'" round :loading="false" type="danger" @click="like">{{article.attitude ===1 ?'取消':''}}点赞</van-button>
 
-    <van-button icon="delete" round :loading="false" type="danger">不喜欢</van-button>
+    <van-button icon="delete" round :loading="false" type="danger"
+    @click="fond">{{article.attitude ===0 ?'不':''}}喜欢</van-button>
   </div>
 </template>
 
 <script>
-import { ThumbUpArticles, CancelThumbUp } from '@/api/user'
+import { ThumbUpArticles, CancelThumbUp, likeArticles, dislikeArticles } from '@/api/user'
 export default {
   name: 'MoreActon',
   props: ['article'],
@@ -38,6 +39,25 @@ export default {
         }
       } catch (err) {
         this.$toast.fail('操作失败')
+      }
+    },
+    // 喜欢不喜欢
+    async fond () {
+      if (!this.$checkLogin()) {
+        return
+      }
+      try {
+        if (this.article.attitude === 0) {
+          // 喜欢
+          await likeArticles(this.article.art_id)
+          this.article.attitude = ''
+        } else {
+          // 不喜欢
+          await dislikeArticles(this.article.art_id)
+          this.article.attitude = 0
+        }
+      } catch (err) {
+
       }
     }
   }

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <van-nav-bar title="文章详情" left-text="返回" left-arrow @click-left="$router.back()" />
+    <van-nav-bar title="文章详情" left-text="返回" left-arrow @click-left="$router.back()"
+    flexd/>
     <div class="article" v-if="article">
       <!-- 文章标题 -->
-      <h2 :class="article-title">{{article.title}}</h2>
+      <h2 class="article-title">{{article.title}}</h2>
       <!-- 作者信息 -->
   <author-info :article='article'></author-info>
       <!-- 文章内容 -->

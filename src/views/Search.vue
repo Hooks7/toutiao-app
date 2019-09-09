@@ -37,7 +37,7 @@
       </van-cell>
       <van-cell v-for="(item,index) in histories"  @click="onSearch(item)" :key="item" :title="item">
         <!-- 自定义右侧内容 -->
-        <van-icon name="close" size="18px" @click="handleDelete(index)" />
+        <van-icon name="close" size="18px" @click.stop="handleDelete(index)" />
       </van-cell>
     </van-cell-group>
   </div>

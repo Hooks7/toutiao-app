@@ -66,6 +66,7 @@
 
     <!-- 弹出频道管理 -->
     <channel-edit
+    @last = 'handleLast'
     @activeChange = "handleChange"
     :active ='activeIndex'
     :channels ="channels"
@@ -117,6 +118,9 @@ export default {
     handleChange (index) {
       this.activeIndex = index
       this.showChannelEdit = false
+    },
+    handleLast () {
+      this.activeIndex--
     },
 
     // 不感兴趣删除列表中的数据

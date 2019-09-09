@@ -128,6 +128,10 @@ export default {
         this.$emit('activeChange', index)
         return
       }
+      if (this.active === this.channels.length - 1) {
+        this.$emit('last')
+      }
+
       // 2.编辑模式
       // 把点击的频道，从我的频道删除
       // eslint-disable-next-line no-unused-expressions
