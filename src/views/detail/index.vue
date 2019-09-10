@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-nav-bar title="文章详情" left-text="返回" left-arrow @click-left="$router.back()"
-    flexd/>
+    fixed/>
     <div class="article" v-if="article">
       <!-- 文章标题 -->
       <h2 class="article-title">{{article.title}}</h2>
@@ -13,6 +13,8 @@
       </div>
       <!-- 点赞和取消 -->
       <more-Action :article='article'></more-Action>
+        <!-- 评论列表 -->
+      <comment-list></comment-list>
     </div>
   </div>
 </template>
@@ -21,6 +23,7 @@
 import { getArticle } from '@/api/article'
 import AuthorInfo from './component/AuthorInfo'
 import MoreAction from './component/MoreAction'
+import CommentList from './component/CommentList'
 export default {
   name: 'detail',
   props: ['id'],
@@ -31,7 +34,8 @@ export default {
   },
   components: {
     AuthorInfo,
-    MoreAction
+    MoreAction,
+    CommentList
 
   },
   methods: {
