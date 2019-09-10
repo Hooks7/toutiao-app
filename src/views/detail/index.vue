@@ -17,7 +17,7 @@
       <comment-list :isArticle='true' :id='article.art_id.toString()'></comment-list>
     </div>
           <!-- 发布评论 -->
-      <send-comment :isArticle="true"></send-comment>
+      <send-comment v-if="show" :isArticle="true" :target="article.art_id.toString()"></send-comment>
   </div>
 </template>
 
@@ -33,7 +33,8 @@ export default {
   props: ['id'],
   data () {
     return {
-      article: null
+      article: null,
+      show: false
     }
   },
   components: {
@@ -49,6 +50,7 @@ export default {
       try {
         const res = await getArticle(this.id)
         this.article = res
+        this.show = true
       } catch (err) {
         this.$toast.fail('获取失败')
       }

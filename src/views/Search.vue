@@ -134,10 +134,13 @@ export default {
         })
         .then(() => {
           this.histories.splice(0)
+          this.isEdit = false
+          // 登录
           if (this.user) {
             delHistory()
             return
           }
+          // 没登录
           storageTools.setItem('history', this.histories)
         })
         .catch(() => {
