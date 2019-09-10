@@ -135,7 +135,10 @@ export default {
       // 2.编辑模式
       // 把点击的频道，从我的频道删除
       // eslint-disable-next-line no-unused-expressions
-      index !== 0 ? this.channels.splice(index, 1) : null
+      if (index !== 0) {
+        this.channels.splice(index, 1)
+        return
+      }
       // 登录
       if (this.user) {
         try {

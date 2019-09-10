@@ -249,7 +249,7 @@ export default {
   }
   /deep/ .van-tabs__content {
     margin-bottom: 50px;
-    margin-top: 46px;
+    margin-top: 90px;
   }
 }
 .van-nav-bar {

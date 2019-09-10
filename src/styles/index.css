@@ -1,12 +1,35 @@
 .van-nav-bar {
-  background: pink;
+  background-color: palevioletred;
 }
 .van-nav-bar .van-ellipsis {
   color: beige;
 }
-.van-nav-bar .van-icon{
-  color: #fff
+.article {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  margin-top: 92px;
+  padding: 0px 20px;
+  margin-bottom: 124px;
 }
-.van-nav-bar__text{
-  color: #fff
+.article .article-title {
+  font-size: 40px;
+  font-weight: bold;
+}
+.article .article-content {
+  font-size: 26px;
+}
+.article .article-content /deep/ code,
+.article .article-content /deep/ pre {
+  overflow: scroll;
+  margin: 0px 2px;
+  padding: .5em;
+  font-size: 14px;
+  color: #839496;
+  line-height: 18px;
+  font-family: Consolas, Inconsolata, Courier, monospace;
+  display: block;
+  word-spacing: 0px;
+  letter-spacing: 0px;
+  background: #002b36;
 }

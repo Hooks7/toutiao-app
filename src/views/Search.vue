@@ -136,7 +136,6 @@ export default {
           this.histories.splice(0)
           if (this.user) {
             delHistory()
-
             return
           }
           storageTools.setItem('history', this.histories)

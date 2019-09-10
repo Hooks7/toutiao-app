@@ -15,10 +15,11 @@ export default {
           // 跳转登录界面
           this.$router.push({
             path: '/login',
+            // params  动态路由参数
+            // query   查询字符串
             query: {
               redirect: this.$route.fullPath
             } })
-          console.log(router)
         }).catch(() => {
 
         })

@@ -79,13 +79,18 @@ export default {
         // 存储登陆的状态
         this.setUser(result)
         // 跳转到首页
+        // 获取url上查询字符串 redirect
+        // 如果获取到redirect，跳转到redirect指向的地址
+        // 如果没有redirect跳转到首页
+
         this.$router.push(this.$route.query.redirect || '/')
         this.$toast.success('登录成功')
       } catch (err) {
         this.$toast.fail('登录失败')
-        this.loading = false
       }
+      this.loading = false
     }
+
   },
   created () {
     // 配置自定义验证信息
