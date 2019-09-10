@@ -4,6 +4,12 @@
 .van-nav-bar .van-ellipsis {
   color: beige;
 }
+.van-nav-bar__text {
+  color: #f0ffff;
+}
+.van-nav-bar .van-icon {
+  color: #f0ffff;
+}
 .article {
   word-break: break-all;
   word-wrap: break-word;
