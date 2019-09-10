@@ -50,6 +50,8 @@ export default {
           offset: this.offset,
           limit: this.limit
         })
+
+        // 当前获取的最后一条数据的id存储
         this.offset = data.last_id
         this.list.push(...data.results)
         this.loading = false
@@ -70,5 +72,8 @@ export default {
   height: 25px;
   border-radius: 100%;
   margin-right: 5px;
+}
+.van-list {
+
 }
 </style>
