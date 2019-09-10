@@ -14,7 +14,7 @@
       <!-- 点赞和取消 -->
       <more-Action :article='article'></more-Action>
         <!-- 评论列表 -->
-      <comment-list></comment-list>
+      <comment-list :isArticle='true' :id='article.art_id.toString()'></comment-list>
     </div>
   </div>
 </template>
@@ -26,6 +26,7 @@ import MoreAction from './component/MoreAction'
 import CommentList from './component/CommentList'
 export default {
   name: 'detail',
+  // 文章的id
   props: ['id'],
   data () {
     return {
