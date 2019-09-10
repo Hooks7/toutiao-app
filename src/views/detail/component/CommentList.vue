@@ -15,7 +15,7 @@
         <p>
           <span>{{item.pubdate |fmtDate}}</span>
           ·
-          <span @click="reply">回复{{item.reply_count}}</span>
+          <span @click="reply(item)">回复{{item.reply_count}}</span>
         </p>
       </div>
     </van-cell>
@@ -41,9 +41,11 @@ export default {
     }
   },
   methods: {
-    reply () {
+    reply (comment) {
       // 点击回复按钮，显示回复评论的列表
       this.$store.commit('setShowReplyList', true)
+      // 把comment 记录仓库
+      this.$store.commit('setCurrentComment', comment)
     },
     async onLoad () {
       // 获取评论列表
