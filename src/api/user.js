@@ -57,3 +57,8 @@ export const dislikeArticles = (id) => {
     target: id
   })
 }
+
+// 获取用户自己信息
+export const myself = () => {
+  return request.get('/app/v1_0/user')
+}
