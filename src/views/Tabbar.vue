@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <van-tabbar v-model="active">
+    <van-tabbar route>
       <van-tabbar-item to='/' icon="home-o">主页</van-tabbar-item>
       <van-tabbar-item to="/qa" icon="records">问答</van-tabbar-item>
       <van-tabbar-item to="/video" icon="tv-o">视频</van-tabbar-item>
@@ -14,12 +14,7 @@
 import { mapState } from 'vuex'
 export default {
   name: 'Tabbar',
-  data () {
-    return {
-      active: 0
 
-    }
-  },
   computed: {
     ...mapState(['user'])
   }

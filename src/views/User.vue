@@ -9,32 +9,32 @@
     <!-- 已登录 -->
     <div v-else>
       <van-cell-group class="user-info">
-        <van-cell is-link :border="false" class="base-info">
+        <van-cell is-link :border="false" class="base-info"  @click="$router.push('/user-profile')">
           <div slot="title">
             <img
               class="avatar"
-              src="http://img0.imgtn.bdimg.com/it/u=3641197722,136309602&fm=26&gp=0.jpg"
+              :src="userinfo.photo"
               alt
             />
-            <span class="title">只是为了好玩儿</span>
+            <span class="title">{{userinfo.name}}</span>
           </div>
         </van-cell>
         <van-grid class="data-info" :border="false">
           <van-grid-item>
-            <span class="count">1</span>
+            <span class="count">{{userinfo.art_count}}</span>
             <span class="text">头条</span>
           </van-grid-item>
           <van-grid-item>
-            <span class="count">1</span>
+            <span class="count">{{userinfo.follow_count}}</span>
             <span class="text">关注</span>
           </van-grid-item>
           <van-grid-item>
-            <span class="count">1</span>
-            <span class="text">我的点赞</span>
+            <span class="count">{{userinfo.fans_count}}</span>
+            <span class="text">粉丝</span>
           </van-grid-item>
           <van-grid-item>
-            <span class="count">1</span>
-            <span class="text">游览历史</span>
+            <span class="count">{{userinfo.like_count}}</span>
+            <span class="text">获赞</span>
           </van-grid-item>
         </van-grid>
       </van-cell-group>
@@ -57,22 +57,44 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import { myself } from '@/api/user'
 export default {
   data () {
-    return {}
+    return {
+      userinfo: {} // 用户信息
+    }
   },
   computed: {
     ...mapState(['user'])
   },
   methods: {
+    // 登录
     handleLogin () {
       this.$router.push({
         path: '/login',
         query: {
           redirect: this.$route.fullPath
+
         }
       })
+    },
+
+    // 用户信息
+    async loadUserInfo () {
+      // 判断是否登录
+      if (!this.$checkLogin()) {
+        return
+      }
+      try {
+        const res = await myself()
+        this.userinfo = res
+      } catch (err) {
+        this.$toast.fail('获取用户信息失败')
+      }
     }
+  },
+  created () {
+    this.loadUserInfo()
   }
 }
 </script>
@@ -102,7 +124,7 @@ export default {
     background: palevioletred;
     display: flex;
     align-items: center;
-    height: 55px;
+    height: 50px;
     div {
       display: flex;
       align-items: center;
@@ -110,7 +132,7 @@ export default {
     .avatar {
       margin-right: 15px;
       width: 50px;
-      height: 50px;
+      height: 45px;
       border-radius: 100%;
     }
     .van-icon {

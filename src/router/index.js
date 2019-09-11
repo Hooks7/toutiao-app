@@ -43,12 +43,18 @@ export default new Router({
           path: '',
           component: Home
         }, {
-          name: 'user',
+          name: 'User',
           path: '/user',
           component: () => import('../views/User.vue')
         }
 
       ]
+    },
+    {
+      // 个人信息界面
+      path: '/user-profile',
+      name: 'user-profile',
+      component: () => import(/* webpackChunkName: "user-profile" */ '../views/user-profile/index.vue')
     }
   ]
 })
