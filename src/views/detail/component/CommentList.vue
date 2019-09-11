@@ -43,10 +43,12 @@ export default {
   },
   methods: {
     reply (comment) {
-      // 点击回复按钮，显示回复评论的列表
-      this.$store.commit('setShowReplyList', true)
-      // 把comment 记录仓库
-      this.$store.commit('setCurrentComment', comment)
+      if (this.isArticle) {
+        // 点击回复按钮，显示回复评论的列表
+        this.$store.commit('setShowReplyList', true)
+        // 把comment 记录仓库
+        this.$store.commit('setCurrentComment', comment)
+      }
     },
     async onLoad () {
       // 获取评论列表
