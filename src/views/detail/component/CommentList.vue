@@ -15,7 +15,7 @@
         <p>
           <span>{{item.pubdate |fmtDate}}</span>
           ·
-          <span @click="reply(item)">回复{{item.reply_count}}</span>
+          <span @click="reply(item)" >回复{{item.reply_count}}</span>
         </p>
       </div>
     </van-cell>
