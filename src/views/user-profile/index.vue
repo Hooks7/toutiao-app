@@ -14,7 +14,7 @@
         <img
           width="30"
           height="30"
-          src="http://toutiao.meiduo.site/Fp2XB3DG7Dsye6hAcpg9ZI_yzcpV"
+          :src="userProfile.photo"
           alt
         />
       </div>
@@ -27,7 +27,7 @@
     </van-cell-group>
 
     <!-- 弹出上传文件的组件 -->
-    <upload-file v-model="showUploadFile"></upload-file>
+    <upload-file v-model="showUploadFile" @photo='handleSuccess'></upload-file>
   </div>
 </template>
 
@@ -55,6 +55,9 @@ export default {
       } catch (err) {
         this.$toast.fail('获取失败')
       }
+    },
+    handleSuccess (photo) {
+      this.userProfile.photo = photo
     }
   },
   created () {
