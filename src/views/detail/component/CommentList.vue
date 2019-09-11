@@ -24,6 +24,7 @@
 
 <script>
 import { getComments } from '@/api/comment'
+import eventHub from '@/utils/eventHub'
 export default {
   name: 'commentList',
   // isArticle 是否是文章
@@ -68,6 +69,13 @@ export default {
         this.$toast.fail('获取评论失败')
       }
     }
+  },
+  created () {
+    eventHub.$on('sendSuccess', (obj) => {
+      if (this.isArticle === obj.isArticle) {
+        this.list.unshift(obj.comment)
+      }
+    })
   }
 }
 </script>
