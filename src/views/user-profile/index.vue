@@ -6,7 +6,7 @@
       right-text="保存"
       left-arrow
       @click-left="$router.back()"
-      @click-right="onClickRight"
+
     />
     <van-cell-group>
       <van-cell title="头像" is-link >
@@ -19,17 +19,40 @@
         />
       </div>
        </van-cell>
-      <van-cell title="昵称" is-link value="用户的名字" />
+      <van-cell title="昵称" is-link :value="userProfile.name" />
     </van-cell-group>
     <van-cell-group>
-      <van-cell title="性别" is-link  value="男"/>
-      <van-cell title="生日" is-link  value="2000-1-1"/>
+      <van-cell title="性别" is-link  :value="userProfile.gender?'女':'男'"/>
+      <van-cell title="生日" is-link  :value="userProfile.birthday"/>
     </van-cell-group>
   </div>
 </template>
 
 <script>
-export default {}
+import { getUserProfile } from '@/api/user'
+export default {
+  name: 'UserProfile',
+  data () {
+    return {
+      userProfile: {}
+
+    }
+  },
+  methods: {
+    // 获取当前登录的用户的资料
+    async loadUserProfile () {
+      try {
+        const res = await getUserProfile()
+        this.userProfile = res
+      } catch (err) {
+        this.$toast.fail('获取失败')
+      }
+    }
+  },
+  created () {
+    this.loadUserProfile()
+  }
+}
 </script>
 
 <style>
