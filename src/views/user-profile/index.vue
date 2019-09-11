@@ -9,7 +9,7 @@
 
     />
     <van-cell-group>
-      <van-cell title="头像" is-link >
+      <van-cell title="头像" is-link @click="showUploadFile =true" >
       <div slot="default">
         <img
           width="30"
@@ -25,16 +25,24 @@
       <van-cell title="性别" is-link  :value="userProfile.gender?'女':'男'"/>
       <van-cell title="生日" is-link  :value="userProfile.birthday"/>
     </van-cell-group>
+
+    <!-- 弹出上传文件的组件 -->
+    <upload-file v-model="showUploadFile"></upload-file>
   </div>
 </template>
 
 <script>
 import { getUserProfile } from '@/api/user'
+import UploadFile from './component/UploadFile'
 export default {
   name: 'UserProfile',
+  components: {
+    UploadFile
+  },
   data () {
     return {
-      userProfile: {}
+      userProfile: {}, // 当前登录用户资料
+      showUploadFile: false // 弹层设置
 
     }
   },
