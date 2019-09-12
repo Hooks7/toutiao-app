@@ -60,6 +60,11 @@ export default new Router({
       path: '/follow',
       name: 'follow',
       component: () => import(/* webpackChunkName: "follow" */ '../views/follow/index.vue')
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: () => import(/* webpackChunkName: "follow" */ '../views/Chat.vue')
     }
   ]
 })
