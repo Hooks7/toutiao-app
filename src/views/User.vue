@@ -125,7 +125,7 @@ export default {
     background: palevioletred;
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 70px;
     div {
       display: flex;
       align-items: center;
@@ -133,7 +133,7 @@ export default {
     .avatar {
       margin-right: 15px;
       width: 50px;
-      height: 45px;
+      height: 50px;
       border-radius: 100%;
     }
     .van-icon {

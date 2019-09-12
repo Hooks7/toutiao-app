@@ -59,7 +59,7 @@ export default new Router({
     { // 粉丝界面
       path: '/follow',
       name: 'follow',
-      component: () => import(/* webpackChunkName: "follow" */ '../views/Follow.vue')
+      component: () => import(/* webpackChunkName: "follow" */ '../views/follow/index.vue')
     }
   ]
 })
