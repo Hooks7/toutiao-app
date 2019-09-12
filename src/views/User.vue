@@ -24,11 +24,11 @@
             <span class="count">{{userinfo.art_count}}</span>
             <span class="text">头条</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item @click="$router.push('/follow?type=1')">
             <span class="count">{{userinfo.follow_count}}</span>
             <span class="text">关注</span>
           </van-grid-item>
-          <van-grid-item>
+          <van-grid-item  @click="$router.push('/follow?type=2')">
             <span class="count">{{userinfo.fans_count}}</span>
             <span class="text">粉丝</span>
           </van-grid-item>
@@ -61,7 +61,8 @@ import { myself } from '@/api/user'
 export default {
   data () {
     return {
-      userinfo: {} // 用户信息
+      userinfo: {} // 用户信息，
+
     }
   },
   computed: {

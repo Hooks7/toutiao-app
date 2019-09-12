@@ -55,6 +55,11 @@ export default new Router({
       path: '/user-profile',
       name: 'user-profile',
       component: () => import(/* webpackChunkName: "user-profile" */ '../views/user-profile/index.vue')
+    },
+    { // 粉丝界面
+      path: '/follow',
+      name: 'follow',
+      component: () => import(/* webpackChunkName: "follow" */ '../views/Follow.vue')
     }
   ]
 })
