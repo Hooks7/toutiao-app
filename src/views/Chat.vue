@@ -88,38 +88,38 @@ export default {
   left: 0;
   top: 0;
   box-sizing: border-box;
-  padding: 46px 0 50px 0;
+  padding: 92px 0 100px 0;
   .chat-list {
     height: 100%;
     overflow-y: scroll;
     .chat-item{
-      padding: 10px;
+      padding: 20px;
       .van-image{
         vertical-align: top;
       }
       .chat-pao{
         vertical-align: top;
         display: inline-block;
-        min-width: 40px;
+        min-width: 80px;
         max-width: 70%;
-        min-height: 40px;
-        line-height: 40px;
-        border: 0.5px solid #c2d9ea;
-        border-radius: 4px;
+        min-height: 80px;
+        line-height: 80px;
+        border: 1.0px solid #c2d9ea;
+        border-radius: 8px;
         position: relative;
-        padding: 0 10px;
+        padding: 0 20px;
         background-color: #e0effb;
         word-break: break-all;
-        font-size: 14px;
+        font-size: 28px;
         color: #333;
         &::before{
           content: "";
-          width: 10px;
-          height: 10px;
+          width: 20px;
+          height: 20px;
           position: absolute;
-          top: 13px;
-          border-top:1px solid #c2d9ea;
-          border-right:1px solid #c2d9ea;
+          top: 26px;
+          border-top:2px solid #c2d9ea;
+          border-right:2px solid #c2d9ea;
           background: #e0effb;
         }
       }

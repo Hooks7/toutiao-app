@@ -237,19 +237,19 @@ export default {
     position: fixed;
     left:0;
     right: 0;
-    top: 46px;
+    top: 92px;
     z-index: 100;
     .nav-btn {
       position: fixed;
-      right: 3px;
-      line-height: 44px;
-      font-size: 20px;
+      right: 6px;
+      line-height: 88px;
+      font-size: 40px;
       opacity: 0.8;
     }
   }
   /deep/ .van-tabs__content {
-    margin-bottom: 50px;
-    margin-top: 90px;
+    margin-bottom: 100px;
+    margin-top: 180px;
   }
 }
 .van-nav-bar {

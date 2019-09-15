@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="文章详情" left-text="返回" left-arrow @click-left="$router.back()"
+    <van-nav-bar title="文章详情" left-text="返回" left-arrow @click-left="$router.push('/')"
     fixed/>
     <div class="article" v-if="article">
       <!-- 文章标题 -->

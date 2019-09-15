@@ -113,10 +113,10 @@ export default {
 
 <style lang='less' scoped>
 .login-btn {
-  padding: 20px;
+  padding: 40px;
   .van-button {
     width: 100%;
-    height: 50px;
+    height: 100px;
   }
 }
 </style>

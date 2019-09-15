@@ -10,7 +10,7 @@
     />
 
     <van-list
-    style="margin-top:46px"
+    style="margin-top:92px"
     v-model="loading"
     :finished="finished"
     finished-text="没有更多了"

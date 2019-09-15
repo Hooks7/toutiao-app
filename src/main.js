@@ -10,6 +10,10 @@ import { fmtDate } from '@/utils/dayjs' // 引入时间过滤器
 import 'vant/lib/index.css'
 import './styles/index.css' // 导入通用样式
 import CheckLogin from './utils/CheckLogin'
+import 'amfe-flexible'
+import fastClick from 'fastclick' // 解决移动端点击 300ms 延迟
+
+fastClick.attach(document.body)
 
 Vue.filter('fmtDate', fmtDate)
 
